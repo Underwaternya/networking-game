@@ -5,15 +5,13 @@
 
 .yesNo {
   float: left;
-  padding-right: 20px;
-  clear
+  padding-right: 2rem;
 }
 .question, .ending {
   clear:both;
 }
 
 html h2, body h2 {
-  /*margin-top: -5rem;*/
   text-align: center;
   color: #41403E;
   font-size: 3rem;
