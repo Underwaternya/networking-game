@@ -27,15 +27,15 @@ let myGame = {
 
     if (currentNode.type == 'ending') {
       this.textLink(currentNode.text, currentNode.type, '', nodeIndex);
-      // show retry button in 0.5s
+      // show retry button in 2s
       
       window.setTimeout(function() {
         myGame.textLink("Try again", "reset", '', nodeIndex);
-      }, 500);
+      }, 2000);
     }
   },
   
-  // an intelligent monkey to create blocks, add content and links in HTML
+  // how an intelligent monkey to create blocks, add content and links in HTML
   textLink: function(text, type, nextIndex, currentIndex) {
     // create block container
     let container = $('<div></div>');
@@ -48,34 +48,38 @@ let myGame = {
     
 
     // create links on yes/no buttons
+
+    // generate the "choice" div during generating "yes" button
     if (text == "yes") {
       let choice = $('<div></div>')
         .addClass("block choice " + currentIndex)
         .appendTo("#content");
-
       container.addClass('yes');
     }
 
+    // generate "no" button
     if (text == "no") {
       container.addClass('no');
     }
 
     if (type == 'yesNo') {
       container.appendTo("."+ currentIndex);
-
       content.click(function(){
         myGame.setupNode(nextIndex);
       });
     } else {
       container.appendTo('#content')
-        .addClass('block ' + type);      
-    }
+        .addClass('block ' + type);   
+    }  
 
     if (type == "reset") {
       $('.reset').click(function() {
         myGame.reset();
       })
     }
+
+    // scroll to the latest element (button of the page)
+    $('html, body').animate({scrollTop:$(document).height()}, 'slow');
   },
 
   reset: function() {
