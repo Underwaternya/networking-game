@@ -13,8 +13,7 @@ let myGame = {
     let currentNode = nodes[nodeIndex]; // get current node index
     $('.link').unbind('click'); // prevent users to click another selection
     
-    // there are only two types of nodes in source file nodes.js:  
-    // question and ending. 
+    // there are only two types of nodes in source file nodes.js: question and ending. 
     // For questions, we will create 3 blocks after clicking 
     // (question itself, yes, no)
     // For endings, only one block will be created
@@ -45,9 +44,6 @@ let myGame = {
       .addClass('link')
       .appendTo(container)
       .html(text);
-    
-
-    // create links on yes/no buttons
 
     // generate the "choice" div during generating "yes" button
     if (text == "yes") {
@@ -62,20 +58,24 @@ let myGame = {
       container.addClass('no');
     }
 
+    // append buttons to the divs
     if (type == 'yesNo') {
       container.appendTo("."+ currentIndex);
-      content.click(function(){
-        myGame.setupNode(nextIndex);
-      });
     } else {
       container.appendTo('#content')
         .addClass('block ' + type);   
     }  
 
+    // adding links to divs
     if (type == "reset") {
-      $('.reset').click(function() {
+      content.click(function() {
         myGame.reset();
       })
+    } else if (type == 'yesNo') {
+      content.click(function(){
+        myGame.setupNode(nextIndex);
+        myGame.drawLine($('.'+ currentIndex), text);
+      });
     }
 
     // scroll to the latest element (button of the page)
@@ -85,6 +85,19 @@ let myGame = {
   reset: function() {
     $('#content').html('');
     myGame.initializeGame();
+  },
+
+  drawLine: function(afterWhichDiv, yesOrNo) {
+    let l;
+    (yesOrNo == "yes" ? l = "110px" : l = "196px");
+    let cssMap = {
+      position: 'relative',
+      'border-left': '1px dashed #000',
+      height: '20px',
+      top: '-9px',
+      left: l,
+    }
+    $('<div></div>').css(cssMap).addClass('line').insertAfter(afterWhichDiv);
   }
 };
 
